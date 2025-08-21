@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* --- Tiptap content styles --- */
+.tiptap ul { list-style: disc; margin-left: 1.25rem; padding-left: 1rem; }
+.tiptap ol { list-style: decimal; margin-left: 1.25rem; padding-left: 1rem; }
+
+.tiptap blockquote {
+  border-left: 3px solid rgb(100 116 139); /* slate-500 */
+  padding-left: 0.875rem; /* pl-3.5 */
+  margin: 0.75rem 0;
+  color: rgb(148 163 184); /* slate-400 */
+  font-style: italic;
+}
+
+.tiptap hr {
+  border: 0;
+  border-top: 1px solid rgb(203 213 225); /* slate-300 */
+  margin: 0.75rem 0;
+}
+
+/* Optional placeholder style */
+.tiptap .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: rgb(148 163 184);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.content-html ul { list-style: disc; margin-left: 1.25rem; padding-left: 1rem; }
+.content-html ol { list-style: decimal; margin-left: 1.25rem; padding-left: 1rem; }
+.content-html blockquote {
+  border-left: 3px solid rgb(100 116 139);
+  padding-left: .875rem; margin: .75rem 0; color: rgb(148 163 184); font-style: italic;
+}
+.content-html hr { border: 0; border-top: 1px solid rgb(203 213 225); margin: .75rem 0; }

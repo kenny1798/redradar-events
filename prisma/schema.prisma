@@ -1,0 +1,84 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum VenueCode {
+  NORTH
+  CENTRAL
+  SOUTH
+}
+
+enum RsvpStatus {
+  PENDING
+  CONFIRMED
+  WAITLIST
+  CANCELLED
+}
+
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  venueName   String
+  venueCode   VenueCode
+  address     String?
+  mapUrl      String?
+  dateStart   DateTime
+  dateEnd     DateTime?
+  coverImage  String?
+  coverPublicId  String? 
+  capacity    Int?
+  isPublished Boolean   @default(false)
+  slug        String    @unique
+  rsvps       Rsvp[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  waPhone     String?
+}
+
+model Rsvp {
+  id        String     @id @default(uuid())
+  eventId   String
+  event     Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  fullName  String
+  phone     String
+  email     String?
+  company   String?
+  notes     String?
+  status    RsvpStatus @default(PENDING)
+  createdAt DateTime   @default(now())
+  Checkin   Checkin[]
+
+  @@unique([eventId, email])
+}
+
+
+
+model Checkin {
+  id          String   @id @default(uuid())
+  rsvpId      String
+  rsvp        Rsvp     @relation(fields: [rsvpId], references: [id], onDelete: Cascade)
+  checkedInAt DateTime @default(now())
+  byUser      String?
+}
+
+model EventTemplate {
+  id          String    @id @default(uuid())
+  name        String    // nama template (contoh: "Open Day – Central")
+  title       String    // default page title
+  description String?
+  venueName   String
+  venueCode   VenueCode
+  address     String?
+  mapUrl      String?
+  coverImage  String?
+  capacity    Int?
+  waPhone     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
